@@ -1,0 +1,145 @@
+import os
+import time
+import sys
+# Initialize artefacts using a list of dictionaries
+artefacts = [
+    {
+        "name": "Old Photograph",
+        "category": "Photograph",
+        "location": "Display Case A",
+        "condition": "Good"
+    },
+    {
+        "name": "Handwritten Letter 1940",
+        "category": "Document",
+        "location": "Archive Box 3",
+        "condition": "Damaged"
+    },
+    {
+        "name": "Bronze Coin",
+        "category": "Currency",
+        "location": "Display Case B",
+        "condition": "Good"
+    },
+    {
+        "name": "Vintage Map",
+        "category": "Map",
+        "location": "Archive Shelf 2",
+        "condition": "Under Repair"
+    }
+]
+def clear_screen():
+    """Clears the console screen."""
+    os.system('cls' if os.name == 'nt' else 'clear')
+def display_menu():
+    """Displays the main menu."""
+    print("\n--- Artefact Management System ---")
+    print("1. Add New Artefact")
+    print("2. Update Artefact Condition")
+    print("3. View Artefact Details")
+    print("4. Search Artefact")
+    print("5. Exit")
+    print("---------------------------------")
+def add_artefact():
+    """Add a new artefact."""
+    clear_screen()
+    print("\nAdd New Artefact")
+    name = input("Enter artefact name: ").strip()
+    category = input("Enter category: ").strip()
+    location = input("Enter location: ").strip()
+    while True:
+        condition = input(
+            "Enter condition (Good/Damaged/Under Repair): "
+        ).title()
+        if condition in ["Good", "Damaged", "Under Repair"]:
+            break
+        print("Invalid condition.")
+    artefact = {
+        "name": name,
+        "category": category,
+        "location": location,
+        "condition": condition
+    }
+    artefacts.append(artefact)
+    print("Artefact added successfully.")
+    time.sleep(2)
+def update_condition():
+    """Update artefact condition."""
+    clear_screen()
+    artefact_name = input(
+        "Enter artefact name to update: "
+    ).strip()
+    for artefact in artefacts:
+        if artefact["name"].lower() == artefact_name.lower():
+            while True:
+                new_condition = input(
+                    "Enter new condition (Good/Damaged/Under Repair): "
+                ).title()
+                if new_condition in ["Good", "Damaged", "Under Repair"]:
+                    artefact["condition"] = new_condition
+                    print("Condition updated successfully.")
+                    time.sleep(2)
+                    return
+                print("Invalid condition.")
+    print("Artefact not found.")
+    time.sleep(2)
+def view_artefacts():
+    """Display all artefacts."""
+    clear_screen()
+    print("\nArtefact Collection")
+    if len(artefacts) == 0:
+        print("No artefacts available.")
+    else:
+        for artefact in artefacts:
+            print("\n---------------------")
+            print("Name      :", artefact["name"])
+            print("Category  :", artefact["category"])
+            print("Location  :", artefact["location"])
+            print("Condition :", artefact["condition"])
+    input("\nPress Enter to continue...")
+def search_artefact():
+    """Search artefact by name."""
+    clear_screen()
+    artefact_name = input(
+        "Enter artefact name to search: "
+    ).strip()
+    for artefact in artefacts:
+        if artefact["name"].lower() == artefact_name.lower():
+            print("\nArtefact Found")
+            print("---------------------")
+            print("Name      :", artefact["name"])
+            print("Category  :", artefact["category"])
+            print("Location  :", artefact["location"])
+            print("Condition :", artefact["condition"])
+            input("\nPress Enter to continue...")
+            return
+    print("Artefact not found.")
+    time.sleep(2)
+def exit_program():
+    """Exit the system."""
+    print("Exiting Artefact Management System...")
+    time.sleep(2)
+    sys.exit()
+def main():
+    """Main program."""
+    while True:
+        clear_screen()
+        display_menu()
+        choice = input(
+            "Enter your choice (1-5): "
+        )
+        if choice == "1":
+            add_artefact()
+        elif choice == "2":
+            update_condition()
+        elif choice == "3":
+            view_artefacts()
+        elif choice == "4":
+            search_artefact()
+        elif choice == "5":
+            exit_program()
+        else:
+            print("Invalid choice.")
+            time.sleep(2)
+if __name__ == "__main__":
+    main()
